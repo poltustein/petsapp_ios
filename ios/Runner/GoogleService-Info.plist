@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>777011134534-hne2ica34jcle84400cek4fmp0jq78if.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.777011134534-hne2ica34jcle84400cek4fmp0jq78if</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>777011134534-i5l3d02ojf0sdl94r04fe5taf42i8tgg.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDh_zzjivtxF6c7YAsT4vRyVkfOOBuL_Ow</string>
+	<key>GCM_SENDER_ID</key>
+	<string>777011134534</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.protectiondogs.petsProtection</string>
+	<key>PROJECT_ID</key>
+	<string>petsprotection-bfb7a</string>
+	<key>STORAGE_BUCKET</key>
+	<string>petsprotection-bfb7a.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:777011134534:ios:d88838e86e24a14fbc0a47</string>
+</dict>
+</plist>
