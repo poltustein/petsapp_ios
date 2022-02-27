@@ -32,7 +32,7 @@ class _CategoriesList extends State<CategoriesList> {
  void initState() {
    Future.delayed(Duration.zero, () async {
      final SharedPreferences prefs = await SharedPreferences.getInstance();
-     categoriesResponse = await WebService().getCategories(prefs.getString('emailid'),prefs.getString('token'));
+     categoriesResponse = await WebService().getCategories(prefs.getString('emailid')!,prefs.getString('token')!);
      setState(() {
        isLoaded = true;
      });

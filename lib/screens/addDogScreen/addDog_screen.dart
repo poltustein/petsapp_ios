@@ -579,9 +579,9 @@ class _AddDogScreen extends State<AddDogScreen> {
                     await pr.show();
 
                     SharedPreferences prefs = await SharedPreferences.getInstance();
-                    final addDogResponse = await WebService().addDog(prefs.getString('emailid'),AddDogRequest(nameController.text, breedValue=='Yes'?true:false, dobController.text,
+                    final addDogResponse = await WebService().addDog(prefs.getString('emailid')!,AddDogRequest(nameController.text, breedValue=='Yes'?true:false, dobController.text,
                         gender!, vetChecked=='Yes'?true:false, pedigree=='Yes'?true:false, passport=='Yes'?true:false, vaccination=='Yes'?true:false, weightController.text, notesController.text),
-                        prefs.getString('token'));
+                        prefs.getString('token')!);
 
                     if(addDogResponse==null || addDogResponse.status=='FAILURE' || addDogResponse.dogId==null || addDogResponse.dogId!.isEmpty){
                       await pr.hide();
@@ -590,7 +590,7 @@ class _AddDogScreen extends State<AddDogScreen> {
                       return;
                     }
                     for(PickedFile file in files){
-                      await WebService().addDogImage(prefs.getString('emailid'), addDogResponse, prefs.getString('token'), file);
+                      await WebService().addDogImage(prefs.getString('emailid')!, addDogResponse, prefs.getString('token')!, file);
                     }
                     FocusManager.instance.primaryFocus?.unfocus();
                     Toast.show(addDogResponse.reason, context,

@@ -376,7 +376,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                                 .addProfileImage(
                                 emailTE.text, token, pickedFile);
                             if(imageResponse!=null)
-                              prefs.setString('profileImageUrl', imageResponse.url);
+                              prefs.setString('profileImageUrl', imageResponse.url!);
                           }
                           prefs.setString('name', nameTE.text);
                           prefs.setString('contact', phoneTE.text);

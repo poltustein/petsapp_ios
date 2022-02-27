@@ -217,8 +217,8 @@ class _PlanScreen extends State<PlanScreen>{
                               child:widget.plans!.plans![index].isActive!? MaterialButton(
                                 onPressed: () async{
                                   final prefs = await SharedPreferences.getInstance();
-                                  if(prefs.getBool('isSubscribed')==null || prefs.getBool('isSubscribed')){
-                                   final response =  await WebService().unsubscribe(prefs.getString('emailid'), prefs.getString('token'));
+                                  if(prefs.getBool('isSubscribed')==null || prefs.getBool('isSubscribed')!){
+                                   final response =  await WebService().unsubscribe(prefs.getString('emailid')!, prefs.getString('token')!);
                                    if(response!=null && response.status=='SUCCESS'){
                                      prefs.setBool('isSubscribed', false);
                                      prefs.commit();

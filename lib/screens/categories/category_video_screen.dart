@@ -61,7 +61,7 @@ class _CategoryVideoScreen extends State<CategoryVideoScreen>{
 
   Future<HomeResponse> getCategoryVideos(int pageSize, int pageIndex) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return await WebService().getCategoryVideos(prefs.getString('emailid'), prefs.getString('token'), pageSize, pageIndex, widget.category!.sId!);
+    return await WebService().getCategoryVideos(prefs.getString('emailid')!, prefs.getString('token')!, pageSize, pageIndex, widget.category!.sId!);
   }
 
   String categoriesText(List<Categories> categories) {
@@ -313,9 +313,9 @@ class _CategoryVideoScreen extends State<CategoryVideoScreen>{
                                     await WebService()
                                         .subscriptionPlans(
                                         prefs.getString(
-                                            'emailid'),
+                                            'emailid')!,
                                         prefs.getString(
-                                            'token'));
+                                            'token')!);
                                     d.log(plansResponse
                                         .toJson()
                                         .toString());
@@ -425,8 +425,8 @@ class _CategoryVideoScreen extends State<CategoryVideoScreen>{
                     onTap: () async {
                       final prefs = await SharedPreferences.getInstance();
                       final response = await WebService().saveVideoRequest(
-                          prefs.getString("emailid"),
-                          prefs.getString("token"),
+                          prefs.getString("emailid")!,
+                          prefs.getString("token")!,
                           video!.resourceId!,
                           video!.url!);
 

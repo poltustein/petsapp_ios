@@ -59,8 +59,8 @@ class _SearchVideoScreen extends State<SearchVideoScreen> {
       int pageSize, int pageIndex, String searchTerm) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final response = await WebService().getSearchVideos(
-        prefs.getString("emailid"),
-        prefs.getString("token"),
+        prefs.getString("emailid")!,
+        prefs.getString("token")!,
         pageSize,
         pageIndex,
         searchTerm);
@@ -272,8 +272,8 @@ class _SearchVideoScreen extends State<SearchVideoScreen> {
                     onTap: () async {
                       final prefs = await SharedPreferences.getInstance();
                       final response = await WebService().saveVideoRequest(
-                          prefs.getString("emailid"),
-                          prefs.getString("token"),
+                          prefs.getString("emailid")!,
+                          prefs.getString("token")!,
                           video!.resourceId!,
                           video!.url!);
 

@@ -156,11 +156,11 @@ class _PaymentScreen extends State<PaymentScreen>{
                         ),
                         child: InkWell(
                           onTap: () async {
-                            SubscriptionInit?  subscriptionInit = await WebService().createSubscription(prefs.getString('emailid'), widget.plan.planCosts![widget.selectedIndex]!.singlePlanId!, prefs.getString('token'));
+                            SubscriptionInit?  subscriptionInit = await WebService().createSubscription(prefs.getString('emailid')!, widget.plan.planCosts![widget.selectedIndex]!.singlePlanId!, prefs.getString('token')!);
                             if(subscriptionInit!=null && subscriptionInit.clientSecret!=null){
                               bool isSubscribed = await makePayment(subscriptionInit);
                               if(isSubscribed){
-                                SubscriptionResponse response = await WebService().subscribe(prefs.getString('emailid'), prefs.getString('token'), widget.plan!.planId!, widget.subscriptionPlanId!);
+                                SubscriptionResponse response = await WebService().subscribe(prefs.getString('emailid')!, prefs.getString('token')!, widget.plan!.planId!, widget.subscriptionPlanId!);
                                 if(response.status=='SUCCESS'){
                                   prefs.setBool('isSubscribed', true);
                                   prefs.commit();

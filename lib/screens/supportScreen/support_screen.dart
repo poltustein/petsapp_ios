@@ -102,7 +102,7 @@ class _SupportScreen extends State<SupportScreen>{
                     onPressed: () async {
                       if(issueController.text.isNotEmpty){
                         final prefs = await SharedPreferences.getInstance();
-                        final issueResponse = await WebService().support(prefs.getString('emailid'), issueController.text, prefs.getString('token'));
+                        final issueResponse = await WebService().support(prefs.getString('emailid')!, issueController.text, prefs.getString('token')!);
                           Toast.show(issueResponse.reason, context,
                             duration: Toast.LENGTH_SHORT, gravity: Toast.CENTER);
                          }

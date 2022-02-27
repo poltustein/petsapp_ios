@@ -197,7 +197,7 @@ class _LoginScreen extends State<LoginScreen> {
                                 'contact', networkResponse.contact!);
                             prefs.setString('token', networkResponse.token!);
                             prefs.setString('profileImageUrl',
-                                networkResponse.profileImageUrl);
+                                networkResponse.profileImageUrl!);
                             prefs.setBool('isLoggedIn', true);
                             prefs.commit();
                             log("login done");
@@ -274,7 +274,7 @@ class _LoginScreen extends State<LoginScreen> {
                                   prefs.setString(
                                       'token', networkResponse.token!);
                                   prefs.setString('profileImageUrl',
-                                      networkResponse.profileImageUrl);
+                                      networkResponse.profileImageUrl!);
                                   prefs.setBool('isLoggedIn', true);
                                   prefs.commit();
                                   log("login done");

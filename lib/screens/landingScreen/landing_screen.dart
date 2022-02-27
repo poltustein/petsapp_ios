@@ -202,7 +202,7 @@ class _LandingScreenState extends State<LandingScreen> {
                 InkWell(
                   onTap: () async{
                     final prefs = await SharedPreferences.getInstance();
-                    final MyDogsResponse response = await WebService().mydogs(prefs.getString('emailid'),4,0,prefs.getString('token'));
+                    final MyDogsResponse response = await WebService().mydogs(prefs.getString('emailid')!,4,0,prefs.getString('token')!);
                     log("response="+response.toJson().toString());
                     Get.to(MyDogsScreen(myDogsResponse: response),transition: Transition.rightToLeft,duration: const Duration(milliseconds: 800));
                   },
@@ -244,7 +244,7 @@ class _LandingScreenState extends State<LandingScreen> {
                 InkWell(
                   onTap: () async{
                     final prefs = await SharedPreferences.getInstance();
-                    final SubscriptionPlans plansResponse = await WebService().subscriptionPlans(prefs.getString('emailid'),prefs.getString('token'));
+                    final SubscriptionPlans plansResponse = await WebService().subscriptionPlans(prefs.getString('emailid')!,prefs.getString('token')!);
                     log(plansResponse.toJson().toString());
                     Get.to(PlanScreen(plans: plansResponse),transition: Transition.rightToLeft,duration: const Duration(milliseconds: 800));
                   },

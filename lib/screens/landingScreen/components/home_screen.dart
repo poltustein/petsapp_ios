@@ -94,8 +94,8 @@ class _HomeScreen extends State<HomeScreen> {
   Future<HomeResponse> getHome(int pageSize, int pageIndex) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final response = await WebService().getHomeRequest(
-        prefs.getString("emailid"),
-        prefs.getString("token"),
+        prefs.getString("emailid")!,
+        prefs.getString("token")!,
         pageSize,
         pageIndex);
     return response;
@@ -425,9 +425,9 @@ class _HomeScreen extends State<HomeScreen> {
                                     await WebService()
                                         .subscriptionPlans(
                                         prefs.getString(
-                                            'emailid'),
+                                            'emailid')!,
                                         prefs.getString(
-                                            'token'));
+                                            'token')!);
                                     d.log(plansResponse
                                         .toJson()
                                         .toString());
@@ -538,8 +538,8 @@ class _HomeScreen extends State<HomeScreen> {
                     onTap: () async {
                       final prefs = await SharedPreferences.getInstance();
                       final response = await WebService().saveVideoRequest(
-                          prefs.getString("emailid"),
-                          prefs.getString("token"),
+                          prefs.getString("emailid")!,
+                          prefs.getString("token")!,
                           video!.resourceId!,
                           video!.url!);
 
