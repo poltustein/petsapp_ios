@@ -4,13 +4,13 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:pwd_app/models/SubscriptionPlans.dart';
 import 'package:pwd_app/screens/planScreen/planInfo_screen.dart';
 import 'package:pwd_app/webservice/webservice.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:toast/toast.dart';
 
 class PlanScreen extends StatefulWidget {
 
@@ -228,13 +228,12 @@ class _PlanScreen extends State<PlanScreen>{
 
                                    }
                                    if(response!=null && response.reason!=null && response.reason!.isNotEmpty)
-                                   Toast.show(response.reason!, context,
-                                       duration: Toast.LENGTH_SHORT,
-                                       gravity: Toast.BOTTOM);
+                                    Fluttertoast.showToast(msg: response.reason!,
+                                       toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
                                    else{
-                                     Toast.show("Could not unsubscribe. Please try again later!!", context,
-                                         duration: Toast.LENGTH_SHORT,
-                                         gravity: Toast.BOTTOM);
+                                     Fluttertoast.showToast(msg: "Could not unsubscribe. Please try again later!!",
+                                         toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
+
                                    }
                                   }
 

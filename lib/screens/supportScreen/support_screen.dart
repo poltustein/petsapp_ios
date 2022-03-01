@@ -4,6 +4,7 @@ import 'dart:io' show Platform;
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
@@ -14,7 +15,6 @@ import 'package:pwd_app/webservice/webservice.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/src/material/card.dart' as carder;
 import 'dart:developer' as logger;
-import 'package:toast/toast.dart';
 
 class SupportScreen extends StatefulWidget {
 
@@ -103,12 +103,12 @@ class _SupportScreen extends State<SupportScreen>{
                       if(issueController.text.isNotEmpty){
                         final prefs = await SharedPreferences.getInstance();
                         final issueResponse = await WebService().support(prefs.getString('emailid')!, issueController.text, prefs.getString('token')!);
-                          Toast.show(issueResponse.reason, context,
-                            duration: Toast.LENGTH_SHORT, gravity: Toast.CENTER);
+                        Fluttertoast.showToast(msg: issueResponse.reason!,
+                            toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
                          }
                       else
-                        Toast.show("Please fill in your issue!!", context,
-                            duration: Toast.LENGTH_SHORT, gravity: Toast.CENTER);
+                      Fluttertoast.showToast(msg: "Please fill in your issue!!",
+                          toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
                     },
                     color: Colors.yellow[700],
                     shape: RoundedRectangleBorder(

@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io' as i;
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -12,7 +13,6 @@ import 'package:pwd_app/screens/landingScreen/landing_screen.dart';
 import 'package:pwd_app/screens/verifyotp/verify_otp_screen.dart';
 import 'package:pwd_app/webservice/webservice.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:toast/toast.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -391,13 +391,12 @@ class _ProfileScreen extends State<ProfileScreen> {
                           Get.back();
                         }
                         pr.hide();
-                        Toast.show(networkResponse.reason!, context,
-                            duration: Toast.LENGTH_SHORT,
-                            gravity: Toast.BOTTOM);
+                        Fluttertoast.showToast(msg: networkResponse.reason!,
+                            toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
                       } else {
-                        Toast.show("Please fill in the details", context,
-                            duration: Toast.LENGTH_SHORT,
-                            gravity: Toast.BOTTOM);
+
+                        Fluttertoast.showToast(msg: "Please fill in the details",
+                            toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
                       }
                       log("out of update");
                     },

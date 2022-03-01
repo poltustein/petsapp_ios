@@ -36,7 +36,7 @@ class _CardPaymentScreen extends State<CardPaymentScreen> {
             onPressed: () async {
 
               final prefs = await SharedPreferences.getInstance();
-              final subscriptionInit = await WebService().createSubscription(prefs.getString('emailid'), widget.plan.planCosts![widget.selectedIndex]!.singlePlanId!, prefs.getString('token'));
+              final subscriptionInit = await WebService().createSubscription(prefs.getString('emailid')!, widget.plan.planCosts![widget.selectedIndex]!.singlePlanId!, prefs.getString('token')!);
               Stripe.publishableKey = 'pk_test_51KKmYLSJ36bDoZ0gjiPAXmbmqVln4V3h6NAqmAJXu4Y8p7Py2u7KA3u5s4BhlbtMd2H9a5YgEpYjTThakXRdjLJC00wNStX3dI';
               final paymentMethod =
               await Stripe.instance.createPaymentMethod(PaymentMethodParams.card());

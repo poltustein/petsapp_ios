@@ -1,12 +1,12 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:pwd_app/screens/landingScreen/landing_screen.dart';
 import 'package:pwd_app/screens/login/login_screen.dart';
 import 'package:pwd_app/screens/signup/signup_screen.dart';
 import 'package:pwd_app/webservice/Token.dart';
 import 'package:pwd_app/webservice/webservice.dart';
-import 'package:toast/toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChangePassword extends StatefulWidget {
@@ -275,19 +275,19 @@ class _ChangePassword extends State<ChangePassword> {
                               log("forgot password otp confirmed");
                               Get.off(()=>LoginScreen(),transition: Transition.rightToLeft,duration: const Duration(milliseconds: 800));
                             }
-                            Toast.show(networkResponse.reason!, context,
-                                duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+                            Fluttertoast.showToast(msg: networkResponse.reason!,
+                                toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
 
                           }
                           else{
-                            Toast.show("Password fields do not match", context,
-                                duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+                            Fluttertoast.showToast(msg: "Password fields do not match",
+                                toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
                           }
 
                         }
                         else{
-                          Toast.show("Please fill in all the details!!", context,
-                              duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+                          Fluttertoast.showToast(msg: "Please fill in all the details!!",
+                              toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
                         }
                       },
                       color: Colors.yellow[700],

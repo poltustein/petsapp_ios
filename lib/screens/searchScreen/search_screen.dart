@@ -2,13 +2,13 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:pwd_app/models/HomeResponse.dart';
 import 'package:pwd_app/models/SubscriptionPlans.dart';
 import 'package:pwd_app/webservice/webservice.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:toast/toast.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -124,11 +124,8 @@ class _SearchVideoScreen extends State<SearchVideoScreen> {
                                               searchResponse);
                                         });
                                       } else {
-                                        Toast.show(
-                                            "Could not find any videos for your search!!",
-                                            context,
-                                            duration: Toast.LENGTH_SHORT,
-                                            gravity: Toast.BOTTOM);
+                                        Fluttertoast.showToast(msg: "Could not find any videos for your search!!",
+                                            toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
                                       }
                                     },
                                   ),
@@ -282,8 +279,8 @@ class _SearchVideoScreen extends State<SearchVideoScreen> {
                           favourites[index] = !favourites[index];
                         });
                       }
-                      Toast.show(response.reason!, context,
-                          duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+                      Fluttertoast.showToast(msg: response.reason!,
+                          toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
                     },
                     child: Icon(
                       favourites[index] == true

@@ -1,12 +1,12 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:pwd_app/screens/landingScreen/landing_screen.dart';
 import 'package:pwd_app/screens/login/change_password.dart';
 import 'package:pwd_app/screens/signup/signup_screen.dart';
 import 'package:pwd_app/webservice/Token.dart';
 import 'package:pwd_app/webservice/webservice.dart';
-import 'package:toast/toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -126,8 +126,8 @@ class _ForgotPassword extends State<ForgotPassword> {
                             log("forgot password otp sent");
                             Get.to(()=>ChangePassword(emailId: emailController.text),transition: Transition.rightToLeft,duration: const Duration(milliseconds: 800));
                           }
-                          Toast.show(networkResponse.reason!, context,
-                              duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+                          Fluttertoast.showToast(msg: networkResponse.reason!,
+                              toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
                         }
                       },
                       color: Colors.yellow[700],

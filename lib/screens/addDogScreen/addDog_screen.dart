@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -10,7 +11,6 @@ import 'package:pwd_app/models/AddDogRequest.dart';
 import 'package:pwd_app/screens/landingScreen/landing_screen.dart';
 import 'package:pwd_app/webservice/webservice.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:toast/toast.dart';
 
 class AddDogScreen extends StatefulWidget {
    AddDogScreen({Key? key}) ;
@@ -556,8 +556,8 @@ class _AddDogScreen extends State<AddDogScreen> {
                         pedigree==null || pedigree!.isEmpty || passport==null || passport!.isEmpty || vaccination==null ||
                         vaccination!.isEmpty || weightController.text==null || weightController.text.isEmpty
                         || notesController==null || notesController.text.isEmpty || files ==null || files.isEmpty){
-                      Toast.show("Please fill in all the details", context,
-                          duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+                      Fluttertoast.showToast(msg: "Please fill in all the details",
+                          toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
                       return;
                     }
 
@@ -585,16 +585,16 @@ class _AddDogScreen extends State<AddDogScreen> {
 
                     if(addDogResponse==null || addDogResponse.status=='FAILURE' || addDogResponse.dogId==null || addDogResponse.dogId!.isEmpty){
                       await pr.hide();
-                      Toast.show("Your request could not be processed. Please try again later!!", context,
-                          duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+                      Fluttertoast.showToast(msg: "Your request could not be processed. Please try again later!!",
+                          toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
                       return;
                     }
                     for(PickedFile file in files){
                       await WebService().addDogImage(prefs.getString('emailid')!, addDogResponse, prefs.getString('token')!, file);
                     }
                     FocusManager.instance.primaryFocus?.unfocus();
-                    Toast.show(addDogResponse.reason, context,
-                        duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+                    Fluttertoast.showToast(msg: addDogResponse.reason!,
+                        toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
                     await pr.hide();
                     Get.off(LandingScreen(currentIndex:0));
                   },

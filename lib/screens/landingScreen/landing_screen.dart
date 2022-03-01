@@ -5,7 +5,7 @@ import 'dart:io' as i;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_image/network.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+//import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pwd_app/models/MyDogsResponse.dart';
 import 'package:pwd_app/models/SubscriptionPlans.dart';
 import 'package:pwd_app/screens/ProfileScreen/profile_screen.dart';
@@ -284,8 +284,8 @@ class _LandingScreenState extends State<LandingScreen> {
                     SharedPreferences prefs = await SharedPreferences.getInstance();
                     prefs.clear();
                     prefs.commit();
-                    GoogleSignIn googleSignIn = GoogleSignIn();
-                    googleSignIn.signOut();
+                    // GoogleSignIn googleSignIn = GoogleSignIn();
+                    // googleSignIn.signOut();
                     Get.off(()=>LoginScreen(),transition: Transition.rightToLeft,duration: const Duration(milliseconds: 800));
                   },
                   child: Padding(

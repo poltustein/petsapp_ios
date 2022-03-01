@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 //import 'package:pwd_app/models/AuthenticationProvider.dart';
 import 'package:pwd_app/screens/landingScreen/components/home_screen.dart';
@@ -8,10 +9,9 @@ import 'package:pwd_app/screens/landingScreen/landing_screen.dart';
 import 'package:pwd_app/screens/login/forgot_password.dart';
 import 'package:pwd_app/screens/signup/signup_screen.dart';
 import 'package:pwd_app/webservice/webservice.dart';
-import 'package:toast/toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:provider/provider.dart';
+//import 'package:google_sign_in/google_sign_in.dart';
+//import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -24,7 +24,7 @@ class _LoginScreen extends State<LoginScreen> {
   bool isPasswordShow = false;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  GoogleSignIn googleSignIn = GoogleSignIn();
+  //GoogleSignIn googleSignIn = GoogleSignIn();
 
   @override
   Widget build(BuildContext context) {
@@ -205,9 +205,8 @@ class _LoginScreen extends State<LoginScreen> {
                                 transition: Transition.fadeIn,
                                 duration: const Duration(milliseconds: 800));
                           }
-                          Toast.show(networkResponse.reason!, context,
-                              duration: Toast.LENGTH_SHORT,
-                              gravity: Toast.BOTTOM);
+                           Fluttertoast.showToast(msg: networkResponse.reason!,
+                              toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
                         }
                       },
                       color: Colors.yellow[700],
@@ -243,81 +242,81 @@ class _LoginScreen extends State<LoginScreen> {
                   //     ),
                   //   ),
                   // ),
-                  Container(
-                    margin: EdgeInsets.only(top: 5.0),
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 10),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Sign In with ",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              googleSignIn.signIn().then((value) async{
-                                GoogleSignInAccount val = value!;
-                                final networkResponse = await WebService()
-                                    .loginUser(val!.email!,
-                                        "", "GOOGLE", val!.displayName!=null?val!.displayName!:" ", val!.photoUrl!=null?val!.photoUrl!:"");
-                                if (networkResponse.status == "SUCCESS") {
-                                  final prefs =
-                                      await SharedPreferences.getInstance();
-                                  prefs.setString(
-                                      'emailid', networkResponse.emailId!);
-                                  prefs.setString(
-                                      'name', networkResponse.name!);
-                                  prefs.setString(
-                                      'contact', networkResponse.contact!=null?networkResponse.contact!:" No Contact");
-                                  prefs.setString(
-                                      'token', networkResponse.token!);
-                                  prefs.setString('profileImageUrl',
-                                      networkResponse.profileImageUrl!);
-                                  prefs.setBool('isLoggedIn', true);
-                                  prefs.commit();
-                                  log("login done");
-                                  Future.delayed(Duration.zero, () {
-                                    Get.offAll(()=>LandingScreen(currentIndex:0),
-                                        transition: Transition.fadeIn,
-                                        duration:
-                                        const Duration(milliseconds: 800));
-                                  });
-
-
-                                  Toast.show(networkResponse.reason!, context,
-                                      duration: Toast.LENGTH_SHORT,
-                                      gravity: Toast.BOTTOM);
-                                }
-                                else{
-                                  Toast.show(networkResponse.reason!, context,
-                                      duration: Toast.LENGTH_SHORT,
-                                      gravity: Toast.BOTTOM);
-
-                                  googleSignIn.signOut();
-                                }
-
-                              });
-                            },
-                            child: Image.asset('assets/google.png',
-                                height: 24, width: 24),
-                          ),
-
-                          InkWell(
-                            onTap: () {
-                                //context.read<AuthenticationProvider>().signInWithApple();
-                            },
-                            child: Container(
-
-                              child: Image.asset('assets/apple.png',
-                                  height: 24, width: 24),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
+                  // Container(
+                  //   margin: EdgeInsets.only(top: 5.0),
+                  //   child: Padding(
+                  //     padding: EdgeInsets.only(top: 10),
+                  //     child: Row(
+                  //       mainAxisSize: MainAxisSize.max,
+                  //       mainAxisAlignment: MainAxisAlignment.center,
+                  //       children: [
+                  //         Text(
+                  //           "Sign In with ",
+                  //           style: TextStyle(color: Colors.white),
+                  //         ),
+                  //         InkWell(
+                  //           onTap: () {
+                  //             googleSignIn.signIn().then((value) async{
+                  //               GoogleSignInAccount val = value!;
+                  //               final networkResponse = await WebService()
+                  //                   .loginUser(val!.email!,
+                  //                       "", "GOOGLE", val!.displayName!=null?val!.displayName!:" ", val!.photoUrl!=null?val!.photoUrl!:"");
+                  //               if (networkResponse.status == "SUCCESS") {
+                  //                 final prefs =
+                  //                     await SharedPreferences.getInstance();
+                  //                 prefs.setString(
+                  //                     'emailid', networkResponse.emailId!);
+                  //                 prefs.setString(
+                  //                     'name', networkResponse.name!);
+                  //                 prefs.setString(
+                  //                     'contact', networkResponse.contact!=null?networkResponse.contact!:" No Contact");
+                  //                 prefs.setString(
+                  //                     'token', networkResponse.token!);
+                  //                 prefs.setString('profileImageUrl',
+                  //                     networkResponse.profileImageUrl!);
+                  //                 prefs.setBool('isLoggedIn', true);
+                  //                 prefs.commit();
+                  //                 log("login done");
+                  //                 Future.delayed(Duration.zero, () {
+                  //                   Get.offAll(()=>LandingScreen(currentIndex:0),
+                  //                       transition: Transition.fadeIn,
+                  //                       duration:
+                  //                       const Duration(milliseconds: 800));
+                  //                 });
+                  //
+                  //
+                  //                 Toast.show(networkResponse.reason!, context,
+                  //                     duration: Toast.LENGTH_SHORT,
+                  //                     gravity: Toast.BOTTOM);
+                  //               }
+                  //               else{
+                  //                 Toast.show(networkResponse.reason!, context,
+                  //                     duration: Toast.LENGTH_SHORT,
+                  //                     gravity: Toast.BOTTOM);
+                  //
+                  //                 googleSignIn.signOut();
+                  //               }
+                  //
+                  //             });
+                  //           },
+                  //           child: Image.asset('assets/google.png',
+                  //               height: 24, width: 24),
+                  //         ),
+                  //
+                  //         InkWell(
+                  //           onTap: () {
+                  //               //context.read<AuthenticationProvider>().signInWithApple();
+                  //           },
+                  //           child: Container(
+                  //
+                  //             child: Image.asset('assets/apple.png',
+                  //                 height: 24, width: 24),
+                  //           ),
+                  //         )
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                   Container(
                     transform: Matrix4.translationValues(5.0, -30.0, 0.0),
                     margin: EdgeInsets.only(top: 10.0),

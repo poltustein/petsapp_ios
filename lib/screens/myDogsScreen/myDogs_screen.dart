@@ -324,7 +324,7 @@ class _MyDogsScreen extends State<MyDogsScreen> {
         scrollController.position.maxScrollExtent) && (widget.myDogsResponse!.dogs!.length < widget.myDogsResponse!.total)) {
       //log("inside");
       final prefs = await SharedPreferences.getInstance();
-      MyDogsResponse newResponse = await WebService().mydogs(prefs.getString('emailid'),4,(page+1)*4,prefs.getString('token'));
+      MyDogsResponse newResponse = await WebService().mydogs(prefs.getString('emailid')!,4,(page+1)*4,prefs.getString('token')!);
       log(newResponse.toJson().toString());
       setState(() {
         page += 1;

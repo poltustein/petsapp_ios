@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:pwd_app/screens/landingScreen/landing_screen.dart';
 import 'package:pwd_app/screens/login/login_screen.dart';
 import 'package:pwd_app/screens/signup/signup_screen.dart';
 import 'package:pwd_app/webservice/webservice.dart';
-import 'package:toast/toast.dart';
 
 class VerifyOTPScreen extends StatelessWidget {
   final String email;
@@ -99,8 +99,8 @@ class VerifyOTPScreen extends StatelessWidget {
                       if (networkResponse?.status == "SUCCESS") {
                         Get.to(LoginScreen(),transition: Transition.downToUp,duration: const Duration(milliseconds: 800));
                       }
-                      Toast.show(networkResponse?.reason, context,
-                          duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+                      Fluttertoast.showToast(msg: networkResponse!=null?networkResponse.reason!:"Couldn't process your request",
+                          toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
                     }
                   },
                   color: Colors.yellow[700],
