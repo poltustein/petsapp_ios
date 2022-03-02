@@ -54,8 +54,8 @@ dependencies:
 #  crypto: ^3.0.1
 #  provider: ^6.0.2
   webview_flutter: ^3.0.0
-  progress_dialog:
-     path: packages/progress_dialog
+#  progress_dialog:
+ #    path: packages/progress_dialog
 
 dev_dependencies:
   flutter_test:

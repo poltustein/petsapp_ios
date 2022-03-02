@@ -6,7 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+//import 'package:progress_dialog/progress_dialog.dart';
 import 'package:pwd_app/models/AddDogRequest.dart';
 import 'package:pwd_app/screens/landingScreen/landing_screen.dart';
 import 'package:pwd_app/webservice/webservice.dart';
@@ -77,7 +77,7 @@ class _AddDogScreen extends State<AddDogScreen> {
   Widget build(BuildContext context) {
 
 
-    final ProgressDialog pr = ProgressDialog(context);
+    //final ProgressDialog pr = ProgressDialog(context);
 
     Future<void>  selectDate(BuildContext context) async {
       final DateTime? picked = await showDatePicker(
@@ -561,22 +561,22 @@ class _AddDogScreen extends State<AddDogScreen> {
                       return;
                     }
 
-                    pr.style(
-                        message: 'Adding dog.. Please wait',
-                        borderRadius: 10.0,
-                        backgroundColor: Colors.black,
-                        progressWidget: CircularProgressIndicator(),
-                        elevation: 10.0,
-                        insetAnimCurve: Curves.easeInOut,
-                        progress: 0.0,
-                        maxProgress: 100.0,
-                        progressTextStyle: TextStyle(
-                            color: Colors.white, fontSize: 13.0, fontWeight: FontWeight.w400),
-                        messageTextStyle: TextStyle(
-                            color: Colors.white, fontSize: 19.0, fontWeight: FontWeight.w600)
-                    );
+                    // pr.style(
+                    //     message: 'Adding dog.. Please wait',
+                    //     borderRadius: 10.0,
+                    //     backgroundColor: Colors.black,
+                    //     progressWidget: CircularProgressIndicator(),
+                    //     elevation: 10.0,
+                    //     insetAnimCurve: Curves.easeInOut,
+                    //     progress: 0.0,
+                    //     maxProgress: 100.0,
+                    //     progressTextStyle: TextStyle(
+                    //         color: Colors.white, fontSize: 13.0, fontWeight: FontWeight.w400),
+                    //     messageTextStyle: TextStyle(
+                    //         color: Colors.white, fontSize: 19.0, fontWeight: FontWeight.w600)
+                    // );
 
-                    await pr.show();
+                    //await pr.show();
 
                     SharedPreferences prefs = await SharedPreferences.getInstance();
                     final addDogResponse = await WebService().addDog(prefs.getString('emailid')!,AddDogRequest(nameController.text, breedValue=='Yes'?true:false, dobController.text,
@@ -584,7 +584,7 @@ class _AddDogScreen extends State<AddDogScreen> {
                         prefs.getString('token')!);
 
                     if(addDogResponse==null || addDogResponse.status=='FAILURE' || addDogResponse.dogId==null || addDogResponse.dogId!.isEmpty){
-                      await pr.hide();
+                      //await pr.hide();
                       Fluttertoast.showToast(msg: "Your request could not be processed. Please try again later!!",
                           toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
                       return;
@@ -595,7 +595,7 @@ class _AddDogScreen extends State<AddDogScreen> {
                     FocusManager.instance.primaryFocus?.unfocus();
                     Fluttertoast.showToast(msg: addDogResponse.reason!,
                         toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
-                    await pr.hide();
+                    //await pr.hide();
                     Get.off(LandingScreen(currentIndex:0));
                   },
                   color: Colors.yellow[700],

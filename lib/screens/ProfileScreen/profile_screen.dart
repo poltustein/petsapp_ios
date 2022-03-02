@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+//import 'package:progress_dialog/progress_dialog.dart';
 import 'package:flutter_image/network.dart';
 import 'package:pwd_app/models/login/login.dart';
 import 'package:pwd_app/screens/landingScreen/components/home_screen.dart';
@@ -99,7 +99,7 @@ class _ProfileScreen extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final ProgressDialog pr = ProgressDialog(context);
+    //final ProgressDialog pr = ProgressDialog(context);
 
     emailTE.text = emailid;
     phoneTE.text = contact;
@@ -348,25 +348,25 @@ class _ProfileScreen extends State<ProfileScreen> {
                     onPressed: () async {
                       FocusScope.of(context).requestFocus(new FocusNode());
                       if (nameTE.text.isNotEmpty && phoneTE.text.isNotEmpty) {
-                        pr.style(
-                            message: 'Updating profile.. Please wait',
-                            borderRadius: 10.0,
-                            backgroundColor: Colors.black,
-                            progressWidget: CircularProgressIndicator(),
-                            elevation: 10.0,
-                            insetAnimCurve: Curves.easeInOut,
-                            progress: 0.0,
-                            maxProgress: 100.0,
-                            progressTextStyle: TextStyle(
-                                color: Colors.white,
-                                fontSize: 13.0,
-                                fontWeight: FontWeight.w400),
-                            messageTextStyle: TextStyle(
-                                color: Colors.white,
-                                fontSize: 19.0,
-                                fontWeight: FontWeight.w600));
+                        // pr.style(
+                        //     message: 'Updating profile.. Please wait',
+                        //     borderRadius: 10.0,
+                        //     backgroundColor: Colors.black,
+                        //     progressWidget: CircularProgressIndicator(),
+                        //     elevation: 10.0,
+                        //     insetAnimCurve: Curves.easeInOut,
+                        //     progress: 0.0,
+                        //     maxProgress: 100.0,
+                        //     progressTextStyle: TextStyle(
+                        //         color: Colors.white,
+                        //         fontSize: 13.0,
+                        //         fontWeight: FontWeight.w400),
+                        //     messageTextStyle: TextStyle(
+                        //         color: Colors.white,
+                        //         fontSize: 19.0,
+                        //         fontWeight: FontWeight.w600));
 
-                        await pr.show();
+                        //await pr.show();
                         final networkResponse = await WebService().updateUser(
                             nameTE.text, emailTE.text, phoneTE.text, token);
                         if (networkResponse.status == "SUCCESS") {
@@ -390,7 +390,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                           log('pressed update!!');
                           Get.back();
                         }
-                        pr.hide();
+                        //pr.hide();
                         Fluttertoast.showToast(msg: networkResponse.reason!,
                             toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
                       } else {
