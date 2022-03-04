@@ -222,21 +222,39 @@ class _PlanScreen extends State<PlanScreen>{
                                 onPressed: () async{
                                   final prefs = await SharedPreferences.getInstance();
                                   if(prefs.getBool('isSubscribed')==null || prefs.getBool('isSubscribed')!){
-                                   final response =  await WebService().unsubscribe(prefs.getString('emailid')!, prefs.getString('token')!);
-                                   if(response!=null && response.status=='SUCCESS'){
-                                     prefs.setBool('isSubscribed', false);
-                                     prefs.commit();
-                                     setState(() {
-                                       widget.plans!.plans![index].isActive = false;
-                                     });
-                                   }
-                                   if(response!=null && response.reason!=null && response.reason!.isNotEmpty)
-                                    Fluttertoast.showToast(msg: response.reason!,
-                                       toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
-                                   else{
-                                     Fluttertoast.showToast(msg: "Could not unsubscribe. Please try again later!!",
-                                         toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
-                                   }
+                                    Get.defaultDialog(
+                                      title:"Do you want to cancel your subscription?",
+                                      middleText: "click confirm to cancel",
+                                      confirm: MaterialButton(onPressed: ()async {
+                                        final response =  await WebService().unsubscribe(prefs.getString('emailid')!, prefs.getString('token')!);
+                                        print("hit API done");
+                                        if(response!=null && response.status=='SUCCESS'){
+                                          prefs.setBool('isSubscribed', false);
+                                          prefs.commit();
+                                          setState(() {
+                                            widget.plans!.plans![index].isActive = false;
+                                          });
+                                        }
+                                        if(response!=null && response.reason!=null && response.reason!.isNotEmpty)
+                                          Fluttertoast.showToast(msg: response.reason!,
+                                              toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
+                                        else{
+                                          Fluttertoast.showToast(msg: "Could not unsubscribe. Please try again later!!",
+                                              toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
+                                        }
+
+                                        Get.back();
+                                      },
+                                        child: Text("Confirm"),
+                                        textColor: Colors.black,
+                                      ),
+                                      cancel: MaterialButton(onPressed: ()async {
+                                        Get.back();
+                                        },
+                                        child: Text("Cancel"),
+                                        textColor: Colors.black,
+                                      )
+                                    );
                                   }
                                 },
                                 color: Colors.white,

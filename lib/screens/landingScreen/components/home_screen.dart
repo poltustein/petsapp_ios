@@ -139,7 +139,7 @@ class _HomeScreen extends State<HomeScreen> {
                             top: 55.0, left: 15.0, right: 24.0, bottom: 24.0),
                         child: InkWell(
                           child: Icon(
-                            Icons.account_circle_outlined,
+                            Icons.menu,
                             color: Colors.white.withOpacity(0.4),
                           ),
                           onTap: () {

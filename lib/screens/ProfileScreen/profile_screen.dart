@@ -348,25 +348,6 @@ class _ProfileScreen extends State<ProfileScreen> {
                     onPressed: () async {
                       FocusScope.of(context).requestFocus(new FocusNode());
                       if (nameTE.text.isNotEmpty && phoneTE.text.isNotEmpty) {
-                        // pr.style(
-                        //     message: 'Updating profile.. Please wait',
-                        //     borderRadius: 10.0,
-                        //     backgroundColor: Colors.black,
-                        //     progressWidget: CircularProgressIndicator(),
-                        //     elevation: 10.0,
-                        //     insetAnimCurve: Curves.easeInOut,
-                        //     progress: 0.0,
-                        //     maxProgress: 100.0,
-                        //     progressTextStyle: TextStyle(
-                        //         color: Colors.white,
-                        //         fontSize: 13.0,
-                        //         fontWeight: FontWeight.w400),
-                        //     messageTextStyle: TextStyle(
-                        //         color: Colors.white,
-                        //         fontSize: 19.0,
-                        //         fontWeight: FontWeight.w600));
-
-                        //await pr.show();
                         Get.dialog(
                           Center(
                             child:
@@ -388,20 +369,23 @@ class _ProfileScreen extends State<ProfileScreen> {
                               prefs.setString(
                                   'profileImageUrl', imageResponse.url!);
                           }
-                          prefs.setString('name', nameTE.text);
-                          prefs.setString('contact', phoneTE.text);
+                          await prefs.setString('name', nameTE.text);
+                          await prefs.setString('contact', phoneTE.text);
+                          await prefs.commit();
+
+                          setState(()  {
+                            nameTE.text =  prefs.getString('name')??nameTE.text;
+                            phoneTE.text = prefs.getString('contact')??phoneTE.text;
+
+                          });
 
                           if (profileImageAssetPath != null &&
                               profileImageAssetPath.trim().isNotEmpty) {
                             prefs.setString(
                                 'profileImage', profileImageAssetPath);
                           }
-
-                          prefs.commit();
-                          log('pressed update!!');
-                          Get.back();
+                          await prefs.commit();
                         }
-                        //pr.hide();
                         Fluttertoast.showToast(
                             msg: networkResponse.reason!,
                             toastLength: Toast.LENGTH_SHORT,
@@ -412,7 +396,6 @@ class _ProfileScreen extends State<ProfileScreen> {
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM);
                       }
-                      log("out of update");
                     },
                     color: Colors.yellow[700],
                     shape: RoundedRectangleBorder(

@@ -77,6 +77,21 @@ class _AddDogScreen extends State<AddDogScreen> {
 
     Future<void> selectDate(BuildContext context) async {
       final DateTime? picked = await showDatePicker(
+        builder: (context, child){
+          return Theme(data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: Colors.black, // header background color
+              onPrimary: Colors.white, // header text color
+              onSurface: const Color(0xff191919), // body text color
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                primary: const Color(0xff191919), // button text color
+              ),
+            ),
+          ),
+            child: child!);
+        },
           context: context,
           initialDate: selectedDate,
           firstDate: DateTime(1900, 1, 1),
@@ -666,23 +681,6 @@ class _AddDogScreen extends State<AddDogScreen> {
                           gravity: ToastGravity.BOTTOM);
                       return;
                     }
-
-                    // pr.style(
-                    //     message: 'Adding dog.. Please wait',
-                    //     borderRadius: 10.0,
-                    //     backgroundColor: Colors.black,
-                    //     progressWidget: CircularProgressIndicator(),
-                    //     elevation: 10.0,
-                    //     insetAnimCurve: Curves.easeInOut,
-                    //     progress: 0.0,
-                    //     maxProgress: 100.0,
-                    //     progressTextStyle: TextStyle(
-                    //         color: Colors.white, fontSize: 13.0, fontWeight: FontWeight.w400),
-                    //     messageTextStyle: TextStyle(
-                    //         color: Colors.white, fontSize: 19.0, fontWeight: FontWeight.w600)
-                    // );
-
-                    //await pr.show();
 
                     SharedPreferences prefs =
                         await SharedPreferences.getInstance();

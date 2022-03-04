@@ -96,7 +96,7 @@ class _LandingScreenState extends State<LandingScreen> {
 
     return SafeArea(
       child: Scaffold(
-        onDrawerChanged: (isOpened) {
+        onDrawerChanged: (isOpened) async{
           if(isOpened){
             setState(() {
 
