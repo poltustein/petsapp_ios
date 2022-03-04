@@ -87,7 +87,7 @@ class _HomeScreen extends State<HomeScreen> {
       controller.pause();
       controller.dispose();
     }
-
+    scrollController.dispose();
     super.dispose();
   }
 
@@ -663,7 +663,7 @@ class VideoPlayerWidget extends StatelessWidget {
         ),
         Positioned.fill(
           bottom: 4,
-          child: controller.value.isInitialized
+          child: controller.value.isPlaying
               ? SizedBox.shrink()
               : Image.network(
                   thumbUrl,

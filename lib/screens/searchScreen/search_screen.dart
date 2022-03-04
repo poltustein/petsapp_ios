@@ -69,7 +69,10 @@ class _SearchVideoScreen extends State<SearchVideoScreen> {
 
   @override
   void dispose() {
-    for (VideoPlayerController controller in controllers) controller.dispose();
+    for (VideoPlayerController controller in controllers)
+      controller.dispose();
+
+    scrollController.dispose();
     super.dispose();
   }
 
@@ -418,7 +421,7 @@ class VideoPlayerWidget extends StatelessWidget {
         ),
         Positioned.fill(
           bottom: 4,
-          child: controller.value.isInitialized
+          child: controller.value.isPlaying
               ? SizedBox.shrink()
               : Image.network(
                   thumbUrl,
