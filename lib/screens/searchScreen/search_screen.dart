@@ -124,8 +124,11 @@ class _SearchVideoScreen extends State<SearchVideoScreen> {
                                               searchResponse);
                                         });
                                       } else {
-                                        Fluttertoast.showToast(msg: "Could not find any videos for your search!!",
-                                            toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                "Could not find any videos for your search!!",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM);
                                       }
                                     },
                                   ),
@@ -239,7 +242,9 @@ class _SearchVideoScreen extends State<SearchVideoScreen> {
                                 backgroundColor:
                                     Theme.of(context).appBarTheme.color,
                                 body: VideoPlayerWidget(
-                                    controller: controllers![index]));
+                                  controller: controllers![index],
+                                  thumbUrl: video.thumbUrl ?? "",
+                                ));
 
                           case Orientation.landscape:
                             return Scaffold(
@@ -247,7 +252,9 @@ class _SearchVideoScreen extends State<SearchVideoScreen> {
                                 backgroundColor:
                                     Theme.of(context).appBarTheme.color,
                                 body: VideoPlayerWidget(
-                                    controller: controllers![index]));
+                                  controller: controllers![index],
+                                  thumbUrl: video.thumbUrl ?? "",
+                                ));
                         }
                       }),
                     ),
@@ -279,8 +286,10 @@ class _SearchVideoScreen extends State<SearchVideoScreen> {
                           favourites[index] = !favourites[index];
                         });
                       }
-                      Fluttertoast.showToast(msg: response.reason!,
-                          toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
+                      Fluttertoast.showToast(
+                          msg: response.reason!,
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM);
                     },
                     child: Icon(
                       favourites[index] == true
@@ -373,9 +382,11 @@ class _SearchVideoScreen extends State<SearchVideoScreen> {
 
 class VideoPlayerWidget extends StatelessWidget {
   final VideoPlayerController controller;
+  final String thumbUrl;
 
   const VideoPlayerWidget({
     required this.controller,
+    required this.thumbUrl,
   });
 
   @override
@@ -404,6 +415,21 @@ class VideoPlayerWidget extends StatelessWidget {
           left: 0,
           right: 0,
           child: buildIndicator(),
+        ),
+        Positioned.fill(
+          bottom: 4,
+          child: controller.value.isInitialized
+              ? SizedBox.shrink()
+              : Image.network(
+                  thumbUrl,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(
+                      'assets/Protection Dogs Worldwide-203.jpg',
+                      fit: BoxFit.cover,
+                    );
+                  },
+                ),
         ),
         buildPlay()
       ]));

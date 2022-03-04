@@ -83,7 +83,7 @@ class _ProfileScreen extends State<ProfileScreen> {
         }));
 
     read('contact').then((value) => setState(() {
-          contact = value.trim()=="No Contact"?"":value;
+          contact = value.trim() == "No Contact" ? "" : value;
         }));
 
     read('profileImageUrl').then((value) => setState(() {
@@ -367,21 +367,32 @@ class _ProfileScreen extends State<ProfileScreen> {
                         //         fontWeight: FontWeight.w600));
 
                         //await pr.show();
+                        Get.dialog(
+                          Center(
+                            child:
+                                CircularProgressIndicator(color: Colors.yellow),
+                          ),
+                        );
                         final networkResponse = await WebService().updateUser(
                             nameTE.text, emailTE.text, phoneTE.text, token);
+                        if (Get.isDialogOpen == true) {
+                          Get.back();
+                        }
                         if (networkResponse.status == "SUCCESS") {
                           final prefs = await SharedPreferences.getInstance();
-                          if (pickedFile != null && imageIsSet){
+                          if (pickedFile != null && imageIsSet) {
                             final imageResponse = await WebService()
                                 .addProfileImage(
-                                emailTE.text, token, pickedFile);
-                            if(imageResponse!=null)
-                              prefs.setString('profileImageUrl', imageResponse.url!);
+                                    emailTE.text, token, pickedFile);
+                            if (imageResponse != null)
+                              prefs.setString(
+                                  'profileImageUrl', imageResponse.url!);
                           }
                           prefs.setString('name', nameTE.text);
                           prefs.setString('contact', phoneTE.text);
 
-                          if(profileImageAssetPath!=null && profileImageAssetPath.trim().isNotEmpty){
+                          if (profileImageAssetPath != null &&
+                              profileImageAssetPath.trim().isNotEmpty) {
                             prefs.setString(
                                 'profileImage', profileImageAssetPath);
                           }
@@ -391,12 +402,15 @@ class _ProfileScreen extends State<ProfileScreen> {
                           Get.back();
                         }
                         //pr.hide();
-                        Fluttertoast.showToast(msg: networkResponse.reason!,
-                            toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
+                        Fluttertoast.showToast(
+                            msg: networkResponse.reason!,
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM);
                       } else {
-
-                        Fluttertoast.showToast(msg: "Please fill in the details",
-                            toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
+                        Fluttertoast.showToast(
+                            msg: "Please fill in the details",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM);
                       }
                       log("out of update");
                     },

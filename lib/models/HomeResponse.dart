@@ -8,19 +8,19 @@ class HomeResponse {
   String? subscribeTitle;
   String? subscribeDescription;
   String? buyButtonText;
-  int count=0;
+  int count = 0;
 
   HomeResponse(
       {this.resources,
-        this.videos,
-        this.visibility,
-        this.isVisible,
-        this.subscribePlatformText,
-        this.subscribeImageUrl,
-        this.subscribeTitle,
-        this.subscribeDescription,
-        this.buyButtonText,
-        required this.count});
+      this.videos,
+      this.visibility,
+      this.isVisible,
+      this.subscribePlatformText,
+      this.subscribeImageUrl,
+      this.subscribeTitle,
+      this.subscribeDescription,
+      this.buyButtonText,
+      required this.count});
 
   HomeResponse.fromJson(Map<String, dynamic> json) {
     if (json['resources'] != null) {
@@ -76,12 +76,12 @@ class Resources {
 
   Resources(
       {this.bannerId,
-        this.resources,
-        this.description,
-        this.url,
-        this.thumbUrl,
-        this.title,
-        this.createdOn});
+      this.resources,
+      this.description,
+      this.url,
+      this.thumbUrl,
+      this.title,
+      this.createdOn});
 
   Resources.fromJson(Map<String, dynamic> json) {
     bannerId = json['bannerId'];
@@ -113,17 +113,19 @@ class Videos {
   List<Categories>? categories;
   String? createdOn;
   String? url;
+  String? thumbUrl;
   String? time;
   bool? isLiked;
 
   Videos(
       {this.resourceId,
-        this.resourceType,
-        this.title,
-        this.categories,
-        this.createdOn,
-        this.url,
-        this.time,
+      this.resourceType,
+      this.title,
+      this.categories,
+      this.createdOn,
+      this.url,
+      this.thumbUrl,
+      this.time,
       this.isLiked});
 
   Videos.fromJson(Map<String, dynamic> json) {
@@ -138,6 +140,7 @@ class Videos {
     }
     createdOn = json['createdOn'];
     url = json['url'];
+    thumbUrl = json["thumbUrl"];
     time = json['time'];
     isLiked = json['isLiked'];
   }
@@ -152,6 +155,7 @@ class Videos {
     }
     data['createdOn'] = this.createdOn;
     data['url'] = this.url;
+    data["thumbUrl"] = this.thumbUrl;
     data['time'] = this.time;
     data['isLiked'] = this.isLiked;
     return data;

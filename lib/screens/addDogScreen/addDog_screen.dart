@@ -13,16 +13,16 @@ import 'package:pwd_app/webservice/webservice.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AddDogScreen extends StatefulWidget {
-   AddDogScreen({Key? key}) ;
+  AddDogScreen({Key? key});
 
   @override
   _AddDogScreen createState() => _AddDogScreen();
 }
 
 class _AddDogScreen extends State<AddDogScreen> {
-
   final nameController = TextEditingController();
-  String?  breedValue ;
+  final breedController = TextEditingController();
+  String? breedValue;
   DateTime selectedDate = DateTime.now();
   TextEditingController dobController = TextEditingController();
   String? gender;
@@ -33,39 +33,37 @@ class _AddDogScreen extends State<AddDogScreen> {
   TextEditingController weightController = TextEditingController();
   TextEditingController notesController = TextEditingController();
   final picker = ImagePicker();
-  late  List<PickedFile> files=[];
+  late List<PickedFile> files = [];
   final imageController = TextEditingController();
 
-
-  Future getImageFromSource(ImageSource source) async{
+  Future getImageFromSource(ImageSource source) async {
     final pickedImages;
     final cameraImage;
 
-    if(source == ImageSource.gallery){
+    if (source == ImageSource.gallery) {
       pickedImages = await picker.getMultiImage(imageQuality: 100);
       setState(() {
-        if(pickedImages != null){
+        if (pickedImages != null) {
           files.clear();
           pickedImages.forEach((element) {
-            if(files.length<10)
-            files.add(element);
+            if (files.length < 10) files.add(element);
           });
         }
-        imageController.text = "Selected " + files.length.toString() + (files.length==1?" image" :" images");
+        imageController.text = "Selected " +
+            files.length.toString() +
+            (files.length == 1 ? " image" : " images");
       });
-    }
-
-    else{
+    } else {
       cameraImage = await picker.getImage(source: ImageSource.camera);
       setState(() {
-        if(cameraImage != null)
-          files = [cameraImage];
-        imageController.text = "Selected " + files.length.toString() + (files.length==1?" image" :" images");
+        if (cameraImage != null) files = [cameraImage];
+        imageController.text = "Selected " +
+            files.length.toString() +
+            (files.length == 1 ? " image" : " images");
       });
     }
 
     Navigator.pop(context);
-
   }
 
   @override
@@ -75,21 +73,18 @@ class _AddDogScreen extends State<AddDogScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
     //final ProgressDialog pr = ProgressDialog(context);
 
-    Future<void>  selectDate(BuildContext context) async {
+    Future<void> selectDate(BuildContext context) async {
       final DateTime? picked = await showDatePicker(
           context: context,
           initialDate: selectedDate,
-          firstDate: DateTime(1900, 1,1),
-          lastDate: DateTime.now()
-      );
-      if(picked!=null && picked!=selectedDate){
+          firstDate: DateTime(1900, 1, 1),
+          lastDate: DateTime.now());
+      if (picked != null && picked != selectedDate) {
         setState(() {
           selectedDate = picked;
-          print("setting date="+selectedDate.toString());
+          print("setting date=" + selectedDate.toString());
         });
       }
     }
@@ -146,7 +141,7 @@ class _AddDogScreen extends State<AddDogScreen> {
               ),
               Padding(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Card(
                   color: const Color(0xff191919),
                   shape: RoundedRectangleBorder(
@@ -160,55 +155,87 @@ class _AddDogScreen extends State<AddDogScreen> {
                           border: InputBorder.none,
                           hintText: "Full Name",
                           hintStyle:
-                          TextStyle(color: Colors.white.withOpacity(0.4))),
+                              TextStyle(color: Colors.white.withOpacity(0.4))),
                       style: const TextStyle(color: Colors.white),
                     ),
                   ),
                 ),
               ),
-              Container(
-                width: double.infinity,
-                child: Padding(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: Card(
-                    color: const Color(0xff191919),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(32)),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
-                      child: DropdownButtonFormField<String>(
-                        decoration: InputDecoration(
-                          labelText: "Breed",
-                          labelStyle: TextStyle(color: Colors.white.withOpacity(0.4))
-                        ),
-                        hint: Text("Breed",style: TextStyle(color: Colors.white.withOpacity(0.4) ),),
-                        icon: Icon(
-                                  Icons.keyboard_arrow_down,
-                                  color: Colors.white.withOpacity(0.4),
-                                ),
-                        style: TextStyle(color: Colors.white),
-                        dropdownColor: const Color(0xff191919),
-                        items: <String>['Yes', 'No'].map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        value: breedValue,
-                        onChanged: (changedValue) {
-                          setState(() {
-                            breedValue=changedValue;
-                          });
-                        },
-                      )
+              // Container(
+              //   width: double.infinity,
+              //   child: Padding(
+              //     padding:
+              //         const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              //     child: Card(
+              //       color: const Color(0xff191919),
+              //       shape: RoundedRectangleBorder(
+              //           borderRadius: BorderRadius.circular(32)),
+              //       child: Padding(
+              //           padding: const EdgeInsets.symmetric(horizontal: 24),
+              //           child: DropdownButtonFormField<String>(
+              //             decoration: InputDecoration(
+              //                 labelText: "Breed",
+              //                 labelStyle: TextStyle(
+              //                     color: Colors.white.withOpacity(0.4))),
+              //             hint: Text(
+              //               "Breed",
+              //               style:
+              //                   TextStyle(color: Colors.white.withOpacity(0.4)),
+              //             ),
+              //             icon: Icon(
+              //               Icons.keyboard_arrow_down,
+              //               color: Colors.white.withOpacity(0.4),
+              //             ),
+              //             style: TextStyle(color: Colors.white),
+              //             dropdownColor: const Color(0xff191919),
+              //             items: <String>[
+              //               'German Shepherd',
+              //               'Doberman',
+              //               "Giant Schnauzer",
+              //               "Cane Corso",
+              //               "Rottweiller"
+              //             ].map((String value) {
+              //               return DropdownMenuItem<String>(
+              //                 value: value,
+              //                 child: Text(value),
+              //               );
+              //             }).toList(),
+              //             value: breedValue,
+              //             onChanged: (changedValue) {
+              //               setState(() {
+              //                 breedValue = changedValue;
+              //               });
+              //             },
+              //           )),
+              //     ),
+              //   ),
+              // ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Card(
+                  color: const Color(0xff191919),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32)),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: TextField(
+                      controller: breedController,
+                      cursorColor: Colors.white,
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Breed",
+                          hintStyle:
+                              TextStyle(color: Colors.white.withOpacity(0.4))),
+                      style: const TextStyle(color: Colors.white),
                     ),
                   ),
                 ),
               ),
+
               Padding(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Card(
                   color: const Color(0xff191919),
                   shape: RoundedRectangleBorder(
@@ -216,27 +243,40 @@ class _AddDogScreen extends State<AddDogScreen> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: TextFormField(
-                      controller:  dobController,
-
+                      controller: dobController,
+                      onTap: () async {
+                        FocusScope.of(context).requestFocus(new FocusNode());
+                        await selectDate(context);
+                        setState(() {
+                          dobController.text = DateFormat('dd/MM/yyyy').format(
+                              selectedDate); //selectedDate!.day.toString()+"/"+selectedDate!.month.toString()+"/"+selectedDate!.year.toString();
+                          print(dobController.text);
+                        });
+                      },
+                      readOnly: true,
                       cursorColor: Colors.white,
                       decoration: InputDecoration(
                           suffixIcon: IconButton(
-                              icon: Icon(
-                                Icons.calendar_today,
-                                color: Colors.white.withOpacity(0.4),
-                              ), onPressed: () async{
-                              FocusScope.of(context).requestFocus(new FocusNode());
+                            icon: Icon(
+                              Icons.calendar_today,
+                              color: Colors.white.withOpacity(0.4),
+                            ),
+                            onPressed: () async {
+                              FocusScope.of(context)
+                                  .requestFocus(new FocusNode());
                               await selectDate(context);
                               setState(() {
-                                dobController.text = DateFormat('dd/MM/yyyy').format(selectedDate); //selectedDate!.day.toString()+"/"+selectedDate!.month.toString()+"/"+selectedDate!.year.toString();
+                                dobController.text = DateFormat('dd/MM/yyyy')
+                                    .format(
+                                        selectedDate); //selectedDate!.day.toString()+"/"+selectedDate!.month.toString()+"/"+selectedDate!.year.toString();
                                 print(dobController.text);
                               });
-
-                          },),
+                            },
+                          ),
                           border: InputBorder.none,
                           hintText: "DOB - dd/mm/yyyy",
                           hintStyle:
-                          TextStyle(color: Colors.white.withOpacity(0.4))),
+                              TextStyle(color: Colors.white.withOpacity(0.4))),
                       style: const TextStyle(color: Colors.white),
                     ),
                   ),
@@ -244,7 +284,7 @@ class _AddDogScreen extends State<AddDogScreen> {
               ),
               Padding(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Card(
                   color: const Color(0xff191919),
                   shape: RoundedRectangleBorder(
@@ -254,9 +294,12 @@ class _AddDogScreen extends State<AddDogScreen> {
                     child: DropdownButtonFormField<String>(
                       decoration: InputDecoration(
                           labelText: "Gender",
-                          labelStyle: TextStyle(color: Colors.white.withOpacity(0.4))
+                          labelStyle:
+                              TextStyle(color: Colors.white.withOpacity(0.4))),
+                      hint: Text(
+                        "Gender",
+                        style: TextStyle(color: Colors.white.withOpacity(0.4)),
                       ),
-                      hint: Text("Gender",style: TextStyle(color: Colors.white.withOpacity(0.4) ),),
                       icon: Icon(
                         Icons.keyboard_arrow_down,
                         color: Colors.white.withOpacity(0.4),
@@ -272,7 +315,7 @@ class _AddDogScreen extends State<AddDogScreen> {
                       value: gender,
                       onChanged: (changedValue) {
                         setState(() {
-                          gender=changedValue;
+                          gender = changedValue;
                         });
                       },
                     ),
@@ -281,7 +324,7 @@ class _AddDogScreen extends State<AddDogScreen> {
               ),
               Padding(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Card(
                   color: const Color(0xff191919),
                   shape: RoundedRectangleBorder(
@@ -293,56 +336,89 @@ class _AddDogScreen extends State<AddDogScreen> {
                       cursorColor: Colors.white,
                       decoration: InputDecoration(
                           suffixIcon: MaterialButton(
-                            onPressed: (){
-                                  showDialog(context: context, builder: (BuildContext context) => new AlertDialog(
-                                    backgroundColor: Colors.black,
-                                    title: Text('Pick an Image source'),
-                                    content: Text('Pick an Image source'),
-                                    actions: <Widget>[
-                                      InkWell(
-                                        onTap: () async {
-                                          await getImageFromSource(ImageSource.camera);
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
-                                            children: [
-                                              Flexible(flex: 2,child: Icon(Icons.camera_alt_rounded, color: Colors.white.withOpacity(0.5),)),
-                                              Spacer(flex: 1),
-                                              Flexible(flex: 2,child: Text("Camera",style: TextStyle(color: Colors.white.withOpacity(0.5)))),
-                                            ],
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      new AlertDialog(
+                                        backgroundColor: Colors.black,
+                                        title: Text('Pick an Image source'),
+                                        content: Text('Pick an Image source'),
+                                        actions: <Widget>[
+                                          InkWell(
+                                            onTap: () async {
+                                              await getImageFromSource(
+                                                  ImageSource.camera);
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Row(
+                                                children: [
+                                                  Flexible(
+                                                      flex: 2,
+                                                      child: Icon(
+                                                        Icons
+                                                            .camera_alt_rounded,
+                                                        color: Colors.white
+                                                            .withOpacity(0.5),
+                                                      )),
+                                                  Spacer(flex: 1),
+                                                  Flexible(
+                                                      flex: 2,
+                                                      child: Text("Camera",
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .white
+                                                                  .withOpacity(
+                                                                      0.5)))),
+                                                ],
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ),
-
-                                      InkWell(
-                                        onTap: () async{
-                                          await getImageFromSource(ImageSource.gallery);
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
-                                            children: [
-                                              Flexible(flex: 2,child: Icon(Icons.folder, color: Colors.white.withOpacity(0.5),)),
-                                              Spacer(flex: 1),
-                                              Flexible(flex: 2,child: Text("Gallery",style: TextStyle(color: Colors.white.withOpacity(0.5)))),
-                                            ],
-                                          ),
-                                        ),
-                                      )
-
-                                    ],
-                                  ));
+                                          InkWell(
+                                            onTap: () async {
+                                              await getImageFromSource(
+                                                  ImageSource.gallery);
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Row(
+                                                children: [
+                                                  Flexible(
+                                                      flex: 2,
+                                                      child: Icon(
+                                                        Icons.folder,
+                                                        color: Colors.white
+                                                            .withOpacity(0.5),
+                                                      )),
+                                                  Spacer(flex: 1),
+                                                  Flexible(
+                                                      flex: 2,
+                                                      child: Text("Gallery",
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .white
+                                                                  .withOpacity(
+                                                                      0.5)))),
+                                                ],
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ));
                             },
                             child: Text("ADD"),
                             color: Colors.white.withOpacity(0.5),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(32)),
                             minWidth: 12,
                           ),
                           border: InputBorder.none,
                           hintText: "Add Images (max 10 images)",
                           hintStyle:
-                          TextStyle(color: Colors.white.withOpacity(0.4))),
+                              TextStyle(color: Colors.white.withOpacity(0.4))),
                       style: const TextStyle(color: Colors.white),
                     ),
                   ),
@@ -350,7 +426,7 @@ class _AddDogScreen extends State<AddDogScreen> {
               ),
               Padding(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Card(
                   color: const Color(0xff191919),
                   shape: RoundedRectangleBorder(
@@ -360,9 +436,12 @@ class _AddDogScreen extends State<AddDogScreen> {
                     child: DropdownButtonFormField<String>(
                       decoration: InputDecoration(
                           labelText: "Vet checked",
-                          labelStyle: TextStyle(color: Colors.white.withOpacity(0.4))
+                          labelStyle:
+                              TextStyle(color: Colors.white.withOpacity(0.4))),
+                      hint: Text(
+                        "Vet checked",
+                        style: TextStyle(color: Colors.white.withOpacity(0.4)),
                       ),
-                      hint: Text("Vet checked",style: TextStyle(color: Colors.white.withOpacity(0.4) ),),
                       icon: Icon(
                         Icons.keyboard_arrow_down,
                         color: Colors.white.withOpacity(0.4),
@@ -378,7 +457,7 @@ class _AddDogScreen extends State<AddDogScreen> {
                       value: vetChecked,
                       onChanged: (changedValue) {
                         setState(() {
-                          vetChecked=changedValue;
+                          vetChecked = changedValue;
                         });
                       },
                     ),
@@ -387,7 +466,7 @@ class _AddDogScreen extends State<AddDogScreen> {
               ),
               Padding(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Card(
                   color: const Color(0xff191919),
                   shape: RoundedRectangleBorder(
@@ -397,9 +476,12 @@ class _AddDogScreen extends State<AddDogScreen> {
                     child: DropdownButtonFormField<String>(
                       decoration: InputDecoration(
                           labelText: "Pedigree",
-                          labelStyle: TextStyle(color: Colors.white.withOpacity(0.4))
+                          labelStyle:
+                              TextStyle(color: Colors.white.withOpacity(0.4))),
+                      hint: Text(
+                        "Pedigree",
+                        style: TextStyle(color: Colors.white.withOpacity(0.4)),
                       ),
-                      hint: Text("Pedigree",style: TextStyle(color: Colors.white.withOpacity(0.4) ),),
                       icon: Icon(
                         Icons.keyboard_arrow_down,
                         color: Colors.white.withOpacity(0.4),
@@ -415,7 +497,7 @@ class _AddDogScreen extends State<AddDogScreen> {
                       value: pedigree,
                       onChanged: (changedValue) {
                         setState(() {
-                          pedigree=changedValue;
+                          pedigree = changedValue;
                         });
                       },
                     ),
@@ -424,7 +506,7 @@ class _AddDogScreen extends State<AddDogScreen> {
               ),
               Padding(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Card(
                   color: const Color(0xff191919),
                   shape: RoundedRectangleBorder(
@@ -434,9 +516,12 @@ class _AddDogScreen extends State<AddDogScreen> {
                     child: DropdownButtonFormField<String>(
                       decoration: InputDecoration(
                           labelText: "Passport",
-                          labelStyle: TextStyle(color: Colors.white.withOpacity(0.4))
+                          labelStyle:
+                              TextStyle(color: Colors.white.withOpacity(0.4))),
+                      hint: Text(
+                        "Passport",
+                        style: TextStyle(color: Colors.white.withOpacity(0.4)),
                       ),
-                      hint: Text("Passport",style: TextStyle(color: Colors.white.withOpacity(0.4) ),),
                       icon: Icon(
                         Icons.keyboard_arrow_down,
                         color: Colors.white.withOpacity(0.4),
@@ -452,7 +537,7 @@ class _AddDogScreen extends State<AddDogScreen> {
                       value: passport,
                       onChanged: (changedValue) {
                         setState(() {
-                          passport=changedValue;
+                          passport = changedValue;
                         });
                       },
                     ),
@@ -461,7 +546,7 @@ class _AddDogScreen extends State<AddDogScreen> {
               ),
               Padding(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Card(
                   color: const Color(0xff191919),
                   shape: RoundedRectangleBorder(
@@ -471,9 +556,12 @@ class _AddDogScreen extends State<AddDogScreen> {
                     child: DropdownButtonFormField<String>(
                       decoration: InputDecoration(
                           labelText: "Vaccination",
-                          labelStyle: TextStyle(color: Colors.white.withOpacity(0.4))
+                          labelStyle:
+                              TextStyle(color: Colors.white.withOpacity(0.4))),
+                      hint: Text(
+                        "Vaccination",
+                        style: TextStyle(color: Colors.white.withOpacity(0.4)),
                       ),
-                      hint: Text("Vaccination",style: TextStyle(color: Colors.white.withOpacity(0.4) ),),
                       icon: Icon(
                         Icons.keyboard_arrow_down,
                         color: Colors.white.withOpacity(0.4),
@@ -489,7 +577,7 @@ class _AddDogScreen extends State<AddDogScreen> {
                       value: vaccination,
                       onChanged: (changedValue) {
                         setState(() {
-                          vaccination=changedValue;
+                          vaccination = changedValue;
                         });
                       },
                     ),
@@ -498,7 +586,7 @@ class _AddDogScreen extends State<AddDogScreen> {
               ),
               Padding(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Card(
                   color: const Color(0xff191919),
                   shape: RoundedRectangleBorder(
@@ -513,7 +601,7 @@ class _AddDogScreen extends State<AddDogScreen> {
                           border: InputBorder.none,
                           hintText: "Weight (in Kgs)",
                           hintStyle:
-                          TextStyle(color: Colors.white.withOpacity(0.4))),
+                              TextStyle(color: Colors.white.withOpacity(0.4))),
                       style: const TextStyle(color: Colors.white),
                     ),
                   ),
@@ -521,7 +609,7 @@ class _AddDogScreen extends State<AddDogScreen> {
               ),
               Padding(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Card(
                   color: const Color(0xff191919),
                   shape: RoundedRectangleBorder(
@@ -535,7 +623,7 @@ class _AddDogScreen extends State<AddDogScreen> {
                           border: InputBorder.none,
                           hintText: "Training Notes",
                           hintStyle:
-                          TextStyle(color: Colors.white.withOpacity(0.4))),
+                              TextStyle(color: Colors.white.withOpacity(0.4))),
                       style: const TextStyle(color: Colors.white),
                     ),
                   ),
@@ -543,21 +631,39 @@ class _AddDogScreen extends State<AddDogScreen> {
               ),
               Padding(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 2.0),
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 2.0),
                 child: MaterialButton(
                   height: 60,
                   minWidth: double.infinity,
-                  onPressed: () async{
-
-                    if(nameController.text==null || nameController.text.isEmpty ||
-                        breedValue==null || breedValue!.isEmpty ||
-                        dobController.text==null || dobController.text.isEmpty || gender==null || gender!.isEmpty ||
-                        vetChecked==null || vetChecked!.isEmpty || pedigree==null || pedigree!.isEmpty ||
-                        pedigree==null || pedigree!.isEmpty || passport==null || passport!.isEmpty || vaccination==null ||
-                        vaccination!.isEmpty || weightController.text==null || weightController.text.isEmpty
-                        || notesController==null || notesController.text.isEmpty || files ==null || files.isEmpty){
-                      Fluttertoast.showToast(msg: "Please fill in all the details",
-                          toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
+                  onPressed: () async {
+                    if (nameController.text == null ||
+                        nameController.text.isEmpty ||
+                        breedController.text == null ||
+                        breedController.text.isEmpty ||
+                        dobController.text == null ||
+                        dobController.text.isEmpty ||
+                        gender == null ||
+                        gender!.isEmpty ||
+                        vetChecked == null ||
+                        vetChecked!.isEmpty ||
+                        pedigree == null ||
+                        pedigree!.isEmpty ||
+                        pedigree == null ||
+                        pedigree!.isEmpty ||
+                        passport == null ||
+                        passport!.isEmpty ||
+                        vaccination == null ||
+                        vaccination!.isEmpty ||
+                        weightController.text == null ||
+                        weightController.text.isEmpty ||
+                        notesController == null ||
+                        notesController.text.isEmpty ||
+                        files == null ||
+                        files.isEmpty) {
+                      Fluttertoast.showToast(
+                          msg: "Please fill in all the details",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM);
                       return;
                     }
 
@@ -578,25 +684,57 @@ class _AddDogScreen extends State<AddDogScreen> {
 
                     //await pr.show();
 
-                    SharedPreferences prefs = await SharedPreferences.getInstance();
-                    final addDogResponse = await WebService().addDog(prefs.getString('emailid')!,AddDogRequest(nameController.text, breedValue=='Yes'?true:false, dobController.text,
-                        gender!, vetChecked=='Yes'?true:false, pedigree=='Yes'?true:false, passport=='Yes'?true:false, vaccination=='Yes'?true:false, weightController.text, notesController.text),
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    Get.dialog(
+                      Center(
+                        child: CircularProgressIndicator(color: Colors.yellow),
+                      ),
+                    );
+                    final addDogResponse = await WebService().addDog(
+                        prefs.getString('emailid')!,
+                        AddDogRequest(
+                            nameController.text,
+                            breedValue == 'Yes' ? true : false,
+                            breedController.text,
+                            dobController.text,
+                            gender!,
+                            vetChecked == 'Yes' ? true : false,
+                            pedigree == 'Yes' ? true : false,
+                            passport == 'Yes' ? true : false,
+                            vaccination == 'Yes' ? true : false,
+                            weightController.text,
+                            notesController.text),
                         prefs.getString('token')!);
-
-                    if(addDogResponse==null || addDogResponse.status=='FAILURE' || addDogResponse.dogId==null || addDogResponse.dogId!.isEmpty){
+                    if (Get.isDialogOpen == true) {
+                      Get.back();
+                    }
+                    if (addDogResponse == null ||
+                        addDogResponse.status == 'FAILURE' ||
+                        addDogResponse.dogId == null ||
+                        addDogResponse.dogId!.isEmpty) {
                       //await pr.hide();
-                      Fluttertoast.showToast(msg: "Your request could not be processed. Please try again later!!",
-                          toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
+                      Fluttertoast.showToast(
+                          msg:
+                              "Your request could not be processed. Please try again later!!",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM);
                       return;
                     }
-                    for(PickedFile file in files){
-                      await WebService().addDogImage(prefs.getString('emailid')!, addDogResponse, prefs.getString('token')!, file);
+                    for (PickedFile file in files) {
+                      await WebService().addDogImage(
+                          prefs.getString('emailid')!,
+                          addDogResponse,
+                          prefs.getString('token')!,
+                          file);
                     }
                     FocusManager.instance.primaryFocus?.unfocus();
-                    Fluttertoast.showToast(msg: addDogResponse.reason!,
-                        toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
+                    Fluttertoast.showToast(
+                        msg: addDogResponse.reason!,
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM);
                     //await pr.hide();
-                    Get.off(LandingScreen(currentIndex:0));
+                    Get.off(LandingScreen(currentIndex: 0));
                   },
                   color: Colors.yellow[700],
                   shape: RoundedRectangleBorder(
