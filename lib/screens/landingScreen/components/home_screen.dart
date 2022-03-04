@@ -46,7 +46,7 @@ class _HomeScreen extends State<HomeScreen> {
         controllers[0]
           ..addListener(() => setState(() {}))
           ..setLooping(true)
-          ..initialize().then((value) => demoController.play());
+          ..initialize().then((value) => demoController.pause());
       }
 
       updateFavouritesAndVideos(homeResponse);

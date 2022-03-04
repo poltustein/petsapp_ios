@@ -144,7 +144,11 @@ class _PlanScreen extends State<PlanScreen>{
                                           color: Colors.yellow[700],
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: widget.plans!.plans![index].planUrl!="" ?Image.network(widget.plans!.plans![index].planUrl!, height: 56.0,width: 56.0,):Icon(Icons.star_outline_rounded,size:56),
+                                            child: Image.network(widget.plans!.plans![index].planUrl??"", height: 56.0,width: 56.0,
+                                                errorBuilder: (context, error, stackTrace) {
+                                              print("error url="+widget.plans!.plans![index].planUrl!);
+                                              return Icon(Icons.star_outline_rounded,size:56);
+                                            }),
                                           )
                                         ),
                                       ),
@@ -225,7 +229,6 @@ class _PlanScreen extends State<PlanScreen>{
                                      setState(() {
                                        widget.plans!.plans![index].isActive = false;
                                      });
-
                                    }
                                    if(response!=null && response.reason!=null && response.reason!.isNotEmpty)
                                     Fluttertoast.showToast(msg: response.reason!,
@@ -233,15 +236,15 @@ class _PlanScreen extends State<PlanScreen>{
                                    else{
                                      Fluttertoast.showToast(msg: "Could not unsubscribe. Please try again later!!",
                                          toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
-
                                    }
                                   }
-
-                                }, color: Colors.white, child: Padding(
+                                },
+                                color: Colors.white,
+                                child: Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 32.0),
                                 child: Text("Cancel"),
-                              ), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
-
+                              ),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
                               ):null,
                             )
                           ],

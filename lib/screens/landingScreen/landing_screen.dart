@@ -246,7 +246,7 @@ class _LandingScreenState extends State<LandingScreen> {
                     final prefs = await SharedPreferences.getInstance();
                     final SubscriptionPlans plansResponse = await WebService().subscriptionPlans(prefs.getString('emailid')!,prefs.getString('token')!);
                     log(plansResponse.toJson().toString());
-                    Get.to(PlanScreen(plans: plansResponse),transition: Transition.rightToLeft,duration: const Duration(milliseconds: 800));
+                    Get.to(()=>PlanScreen(plans: plansResponse),transition: Transition.rightToLeft,duration: const Duration(milliseconds: 800));
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 4.0),
